@@ -1,88 +1,69 @@
-import React from "react"
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import {fade,makeStyles } from '@material-ui/core/styles';
-import InputBase from '@material-ui/core/InputBase';
-import SearchIcon from '@material-ui/icons/Search';
-import {Link} from "react-router-dom"
+import React from "react";
+import {AppBar,
+  Toolbar,
+  Typography
+} from "@material-ui/core"
+import { Link } from "react-router-dom";
+import Search from "./search"
 
-const useStyles = makeStyles(theme => ({
-    root: {
-      flexGrow: 1,
-    },
-    title: {
-      flexGrow: 1,
-      display: 'none',
-      [theme.breakpoints.up('sm')]: {
-        display: 'block',
-      },
-    },
-    search: {
-      position: 'relative',
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: fade(theme.palette.common.white, 0.15),
-      '&:hover': {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
-      },
-      marginLeft: 0,
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(1),
-        width: 'auto',
-      },
-    },
-    searchIcon: {
-      width: theme.spacing(7),
-      height: '100%',
-      position: 'absolute',
-      pointerEvents: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    inputRoot: {
-      color: 'inherit',
-    },
-    inputInput: {
-      padding: theme.spacing(1, 1, 1, 7),
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        width: 120,
-        '&:focus': {
-          width: 200,
-        },
-      },
-    },
-  }));
+import {connect} from "react-redux"
+import {getPokemonNational} from "../redux/actions/pokemonActions"
 
-export default () => {
-    const classes = useStyles();
-    return(
-        <div className={classes.root}>
+
+class Header extends React.Component {
+  state = {
+    pokemon:"",
+    lista: false
+  }
+  componentDidMount(){
+    this.props.getPokemonNational()
+  }
+  onSearch = data =>{
+    const valor = document.getElementById("namepokemon")
+    const filtro = data.filter(pokemon => {
+      if(pokemon.indexOf(valor.value)+1)
+        return pokemon
+    })
+    this.setState({
+      pokemon:filtro,
+      lista:false
+    })
+  }
+  onOcultar = () =>{
+    this.setState({
+      pokemon: [],
+      lista: true
+    })
+  }
+  render() {
+    const {data} = this.props.national
+    const results = data.map(pokemon => pokemon.pokemon_species.name)
+    return (
+      <div>
         <AppBar position="static">
-          <Toolbar>
-
-            <Typography className={classes.title} variant="h6" noWrap>
-            <Link to="/" style={{textDecoration:"none",color:"white"}}>Poke-info Region</Link>
+          <Toolbar style={{
+            display: "flex",
+            flexFlow: "row wrap",
+            justifyContent: "space-between"
+          }} onBlur={this.onOcultar}>
+            <Typography variant="h6" noWrap>
+              <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+                Poke-info Region
+              </Link>
             </Typography>
-            
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </div>
+            {this.props.path === "/" && <Search onSearch={()=>this.onSearch(results)} result= {this.state.pokemon} lista={this.state.lista}/>}
           </Toolbar>
         </AppBar>
       </div>
-    )
+    );
+  }
 }
+
+const mapStateToProps = ({national}) =>{
+  return{
+    national
+  }
+}
+export default connect (mapStateToProps,{
+  getPokemonNational
+})(Header);

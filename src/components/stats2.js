@@ -5,7 +5,6 @@ import Typography from "@material-ui/core/Typography"
 export default ({stats}) => {
     const stat = stats.map(stat => stat.base_stat)
     const valorMax = Math.max(...stat)
-    console.log(valorMax)
     return(
         <div>
         {

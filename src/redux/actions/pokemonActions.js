@@ -48,3 +48,9 @@ export const getPokemonDetails = (name) => dispatch => {
         payload: axios.get(`${urlBase}${name}`)
     })
 }
+export const getPokemonNational = () => dispatch => {
+    dispatch({
+        type: tipo.GET_POKEMON_NATIONAL,
+        payload: axios.get(`${urlBaseRegion}1`)
+    })
+}

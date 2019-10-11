@@ -6,6 +6,7 @@ import hoenn from "./hoennReducers"
 import sinnoh from "./sinnohReducers"
 import unova from "./unovaReducers"
 import detail from "./detailReducers"
+import national from "./nationalReducers"
 
 export default combineReducers ({
     kanto,
@@ -14,5 +15,6 @@ export default combineReducers ({
     hoenn,
     sinnoh,
     unova,
-    detail
+    detail,
+    national
 })

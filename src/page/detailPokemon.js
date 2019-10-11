@@ -1,11 +1,23 @@
 import React from "react"
 import Header from "../components/header"
-import Portada from "../components/portada"
+import Dashboard from "../components/dashboard"
 import Grid from "@material-ui/core/Grid"
 import StatsBarra from "../components/stats2"
 import Stats from "../components/stats"
 import {connect} from "react-redux"
 import {getPokemonDetails} from "../redux/actions/pokemonActions"
+import Breadcumbs from "../components/breadcumbs"
+import styled from "styled-components"
+import {device} from "../theme/responsive"
+
+const Separado = styled.hr `
+    margin: 0;
+    width: 100px;
+    transform: rotate(90deg);
+    @media ${device.tablet}{
+        display:none;
+    }
+`
 class DetailPokemon extends React.Component{
     componentDidMount(){
         const name = this.props.match.params.name
@@ -15,7 +27,8 @@ class DetailPokemon extends React.Component{
         return(
             <div>
                 <Header/>
-                <Portada 
+                <Breadcumbs/>
+                <Dashboard 
                     name={this.props.detail.name}
                     sprites={this.props.detail.sprites}
                     height={this.props.detail.height}
@@ -28,13 +41,11 @@ class DetailPokemon extends React.Component{
                     justify="center"
                     alignItems="center"
                 >
-                    <Grid item xs={12} sm={4}>
+                    <Grid item xs={10} sm={4}>
                         <Stats stats={this.props.detail.stats}/>
                     </Grid>
-                    <hr style={{margin: "0",
-                                width: "100px",
-                                transform: "rotate(90deg)"}}/>
-                    <Grid item xs={12} sm={4}>
+                    <Separado/>
+                    <Grid item xs={10} sm={4}>
                         <StatsBarra stats={this.props.detail.stats}/>
                     </Grid>
                 </Grid>
