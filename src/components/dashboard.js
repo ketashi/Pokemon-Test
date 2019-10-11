@@ -5,6 +5,7 @@ import StraightenIcon from "@material-ui/icons/Straighten"
 import FitnessCenterIcon from "@material-ui/icons/FitnessCenter"
 import DeviceHubIcon from "@material-ui/icons/DeviceHub"
 import SportsBasketballIcon from "@material-ui/icons/SportsBaseball"
+import {device} from "../theme/responsive"
 
 const urlBaseImage = "https://img.pokemondb.net/artwork/"
 const Nombre = styled.h2 `
@@ -19,6 +20,11 @@ const Image = styled.div `
     margin:10px;
     >img {
         width: 300px;
+    }
+    @media ${device.mobileL}{
+        >img{
+            width: 200px;
+        }
     }
 `
 const ContenedorList = styled.div `

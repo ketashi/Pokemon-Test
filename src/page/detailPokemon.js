@@ -27,7 +27,7 @@ class DetailPokemon extends React.Component{
         return(
             <div>
                 <Header/>
-                <Breadcumbs/>
+                <Breadcumbs name ={this.props.match.params.name}/>
                 <Dashboard 
                     name={this.props.detail.name}
                     sprites={this.props.detail.sprites}

@@ -22,6 +22,7 @@ const ListItem = styled.li `
     align-items: center;
     >span{
         padding-left: 5px;
+        text-transform:capitalize;
     }
 }
 `
@@ -34,7 +35,7 @@ const LinkHome = styled(Link) `
         padding-left: 5px;
     }
 `
-export default () => {
+export default ({name}) => {
   return (
     <Container>
         <List>
@@ -47,7 +48,7 @@ export default () => {
             <ListItem>/</ListItem>
             <ListItem>
                 <WhatshotIcon/>
-                <span>Pokemon</span>
+                <span>{name}</span>
             </ListItem>
         </List>
     </Container>

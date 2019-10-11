@@ -2,6 +2,7 @@ import React from "react"
 import {Link} from "react-router-dom"
 
 import styled from "styled-components"
+import {device} from "../theme/responsive"
 
 const urlBaseImage = "https://img.pokemondb.net/artwork/"
 const Contenedor = styled.div `
@@ -15,6 +16,12 @@ const Lista = styled.ul `
     flex-flow: row wrap;
     justify-content: flex-start;
     align-content: space-around;
+    @media ${device.mobileL}{
+        padding:0;
+    }
+    @media ${device.mobileS}{
+        flex-flow: column;
+    }
 `
 const ListaPokemon = styled(Link) `
     border: 1px outset black;
@@ -46,7 +53,7 @@ const ListaPokemon = styled(Link) `
     >span{
         background: rgba(0,0,0,.3);
         position: relative;
-        margin:0;
+        margin:0 auto;
         padding: 10px 0;
         width: 130px;
         color:yellow;
@@ -58,6 +65,12 @@ const ListaPokemon = styled(Link) `
     &:hover span{
         display:block;
     }
+    @media ${device.mobileL}{
+        margin:10px auto;
+    }
+    @media ${device.mobileS}{
+        margin: 10px;
+    }
 `
 const Title = styled.h2 `
     color:black;
@@ -65,8 +78,9 @@ const Title = styled.h2 `
     text-transform: uppercase;
 `
 export default ({generacion,region}) => (
-    <Contenedor>
+    <div>
         <Title>{`Region de ${region.name}`}</Title>
+    <Contenedor>
         <Lista>
             {
                 (generacion.filter(data => data.entry_number < 60)).map(pokemon =>
@@ -78,4 +92,5 @@ export default ({generacion,region}) => (
             }     
         </Lista>
     </Contenedor>
+    </div>
 )
